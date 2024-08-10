@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-bg: #f9e400c8;
+  --buttons: #7c00fe;
+  --block-btn: #f5004f;
+}
+
+body {
+  background-image: url("./laughing-bg.jpg");
+  height: 100vh;
+}
+
+.container {
+  background-color: var(--main-bg);
+  width: 90vw;
+  height: 90vh;
+  color: #333;
+  border-radius: 12px;
+  display: flex;
+}
+
+.opacity {
+  background-color: #333333d8;
+  opacity: 0.9;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
