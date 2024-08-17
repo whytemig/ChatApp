@@ -18,9 +18,84 @@ const ChatList = () => {
             <FaMinus size={20} color="#fff" />
           )}
         </div>
-        {/* <FaMinus /> */}
       </div>
-      {/* Adding My Chats */}
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
+      <div className="item">
+        <img src="https://avatar.iran.liara.run/public/43" alt="Avatar Image" />
+        <div className="text">
+          <span>John Doe</span>
+          <p>Hello Chat App!</p>
+        </div>
+      </div>
     </div>
   );
 };
