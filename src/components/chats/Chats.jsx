@@ -114,7 +114,9 @@ function Chats() {
             />
           </div>
         </div>
-        <button className="sendBtn">Send</button>
+        <div>
+          <button className="sendBtn">Send</button>
+        </div>
       </div>
     </div>
   );

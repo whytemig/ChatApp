@@ -122,13 +122,9 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   border-top: 1px solid #333;
-  gap: 10px;
-}
-
-.icons {
-  gap: 10px;
+  gap: 20px;
 }
 
 .bottom input {
@@ -143,7 +139,7 @@
 }
 
 .sendBtn,
-.icons > button {
+.randomJoke {
   background-color: var(--buttons);
   color: #fff;
   padding: 10px 20px;
