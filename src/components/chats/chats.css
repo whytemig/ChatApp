@@ -48,8 +48,71 @@
 
 /* CENTER OF CHAT  */
 .center {
-  padding: 20px;
+  padding: 15px;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.message {
+  max-width: 70%;
+  display: flex;
+  gap: 20px;
+}
+.message > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message p {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.message span {
+  font-size: 12px;
+}
+
+.message .text-message {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.text-message > img {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.own {
+  align-self: flex-end;
+}
+
+.own p {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.center::-webkit-scrollbar {
+  width: 10px;
+}
+
+.center::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.center::-webkit-scrollbar-thumb {
+  background: #888;
 }
 
 /* BOTTOM OF CHAT */

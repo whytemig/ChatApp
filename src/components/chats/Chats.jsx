@@ -15,6 +15,7 @@ function Chats() {
 
   return (
     <div className="chat">
+      {/* TOP */}
       <div className="top">
         <div className="userInfo">
           <img src="https://avatar.iran.liara.run/public/43" alt="" />
@@ -24,7 +25,69 @@ function Chats() {
           </div>
         </div>
       </div>
-      <div className="center">Center</div>
+      {/* CENTER */}
+      <div className="center">
+        <div className="message">
+          <img src="https://avatar.iran.liara.run/public/43" alt="" />
+          <div className="text-message">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+        <div className="message own">
+          <div className="text-message">
+            <img src="https://picsum.photos/id/237/200" alt="" />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+        <div className="message">
+          <img src="https://avatar.iran.liara.run/public/43" alt="" />
+          <div className="text-message">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+        <div className="message own">
+          <div className="text-message">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+        <div className="message">
+          <img src="https://avatar.iran.liara.run/public/43" alt="" />
+          <div className="text-message">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+        <div className="message own">
+          <div className="text-message">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
+              officia sint neque ducimus omnis.
+            </p>
+            <span>1 hr ago</span>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM */}
       <div className="bottom">
         <div className="icons">
           <button className="randomJoke">Random Joke</button>
@@ -42,7 +105,13 @@ function Chats() {
             onClick={() => setOpen((prev) => !prev)}
           />
           <div className="picker">
-            <EmojiPicker open={open} onEmojiClick={handleEmojiInput} />
+            <EmojiPicker
+              open={open}
+              onEmojiClick={handleEmojiInput}
+              height={400}
+              width={300}
+              theme="auto"
+            />
           </div>
         </div>
         <button className="sendBtn">Send</button>
