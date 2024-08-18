@@ -59,21 +59,32 @@
 }
 
 .btns {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   padding: 20px;
   margin-top: auto;
 }
 
-button {
+.block,
+.logout {
   width: 100%;
   padding: 10px 20px;
   font-size: 18px;
-  background-color: var(--block-btn);
+  background-color: #f5004e93;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: var(--buttons);
+.logout {
+  background-color: #7b00fe9e;
+}
+.logout:hover {
+  background-color: #7c00fe;
+}
+
+.block:hover {
+  background-color: #f5004f;
 }

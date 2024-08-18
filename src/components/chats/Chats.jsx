@@ -1,11 +1,17 @@
 import "./chats.css";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function Chats() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+
+  const messageRef = useRef(null);
+
+  useEffect(() => {
+    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   // function for input for Emoji
   function handleEmojiInput(e) {
@@ -85,6 +91,7 @@ function Chats() {
             <span>1 hr ago</span>
           </div>
         </div>
+        <div ref={messageRef}></div>
       </div>
 
       {/* BOTTOM */}

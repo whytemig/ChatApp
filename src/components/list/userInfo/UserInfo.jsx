@@ -1,10 +1,10 @@
-import "./userinfo.css";
+import "../userInfo/userinfo.css";
 import { FaGithub } from "react-icons/fa";
 
 function UserInfo() {
   return (
     <div className="userinfo">
-      <div className="user">
+      <div className="users">
         <img src="https://avatar.iran.liara.run/public/43" alt="" />
         <h2>Miguel Black</h2>
       </div>
