@@ -33,3 +33,20 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.loading {
+  width: 40%;
+  height: 20%;
+  padding: 30px;
+  font-size: 36px;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(17, 25, 40, 0.9);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
