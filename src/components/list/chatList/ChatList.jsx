@@ -1,6 +1,7 @@
 import { FaMinus, FaSearch, FaPlus } from "react-icons/fa";
 import "./chatlist.css";
 import { useState } from "react";
+import AddUser from "../../addUser/AddUser";
 
 const ChatList = () => {
   const [addMode, setAddMode] = useState(true);
@@ -96,6 +97,7 @@ const ChatList = () => {
           <p>Hello Chat App!</p>
         </div>
       </div>
+      {!addMode && <AddUser />}
     </div>
   );
 };

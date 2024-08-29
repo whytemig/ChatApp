@@ -1,0 +1,63 @@
+.addUser {
+  width: 400px;
+  height: min-content;
+  padding: 20px;
+  background-color: #7b00feee;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+#modal-form {
+  display: flex !important;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.modalInput {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+#modal-btn {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #569ceb;
+  color: #fff;
+  font-weight: 700;
+}
+.userAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  color: #fff;
+}
+
+.userDetails {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.aUser {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#addbtn {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #569ceb;
+  color: #fff;
+  border: none;
+}

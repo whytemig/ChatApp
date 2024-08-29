@@ -5,7 +5,7 @@ import Login from "./components/login/Login";
 import Notify from "./components/notify/Notify";
 
 function App() {
-  const authUser = false;
+  const authUser = true;
   return (
     <div className="opacity">
       <div className="container">
