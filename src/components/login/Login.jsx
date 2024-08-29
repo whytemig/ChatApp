@@ -1,8 +1,17 @@
 import { useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth, database } from "../../library/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import upload from "../../library/upload";
+
 const Login = () => {
   const [avatar, setAvatar] = useState({ file: null, url: "" });
+  const [loading, setLoading] = useState(false);
 
   //function to set Avatar
   function handleAvatar(e) {
@@ -10,15 +19,64 @@ const Login = () => {
 
     if (e.target.files[0]) {
       setAvatar({
-        file: e.target.files[0],
+        file: e.target.files[0] || "https://avatar.iran.liara.run/public/43",
         url: URL.createObjectURL(e.target.files[0]),
       });
     }
   }
 
-  function handleLogin(e) {
+  async function handleRegister(e) {
     e.preventDefault();
-    toast.warn("hello");
+    const formData = new FormData(e.target);
+    setLoading(true);
+    const { username, email, password } = Object.fromEntries(formData);
+
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      //image upload
+      const imgUrl = await upload(avatar.file);
+
+      await setDoc(doc(database, "users", response.user.uid), {
+        username,
+        email,
+        avatar: imgUrl,
+        id: response.user.uid, // <- fixed typo here (response.user.uid)
+        block: [],
+      });
+      await setDoc(
+        doc(database, "userchats", response.user.uid), // <- corrected this part
+        {
+          chats: [],
+        }
+      );
+      toast.success("Account Created!");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData);
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Welcome Back!!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error: Invalid Credentials");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -33,7 +91,9 @@ const Login = () => {
             placeholder="Enter your password"
             name="password"
           />
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading.." : "Login"}
+          </button>
         </form>
       </div>
       {/* LINE SEPARATOR */}
@@ -41,7 +101,7 @@ const Login = () => {
       {/* SIGN UP SIDE */}
       <div className="items">
         <h2>Create an Account</h2>
-        <form>
+        <form onSubmit={handleRegister}>
           <label htmlFor="file">
             Upload an Image
             <img
@@ -66,7 +126,9 @@ const Login = () => {
             placeholder="Enter your password"
             name="password"
           />
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading.." : "Sign Up"}
+          </button>
         </form>
       </div>
     </div>
