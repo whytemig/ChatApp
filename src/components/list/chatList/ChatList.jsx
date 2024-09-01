@@ -19,7 +19,7 @@ const ChatList = () => {
         const items = res.data().chats;
 
         const promises = items.map(async (item) => {
-          const userDocRef = doc(database, "users", item.receiverId);
+          const userDocRef = doc(database, "users", item.recieverId);
           const userDocSnap = await getDoc(userDocRef);
 
           let user = userDocSnap.data();
@@ -29,12 +29,16 @@ const ChatList = () => {
 
         const chatData = await Promise.all(promises);
 
-        setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+        setChats(chatData.sort((a, b) => b.updatedat - a.updatedat));
       }
     );
 
-    return () => unSub();
+    return () => {
+      unSub();
+    };
   }, [user?.id]);
+
+  console.log(chats);
 
   return (
     <div className="chatlist">
@@ -58,7 +62,7 @@ const ChatList = () => {
             alt="Avatar Image"
           />
           <div className="text">
-            <span>{}</span>
+            <span>{chat.user.username}</span>
             <p>{chat.lastMessage}</p>
           </div>
         </div>

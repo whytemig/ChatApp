@@ -105,11 +105,7 @@ const Login = () => {
           <label htmlFor="file">
             Upload an Image
             <img
-              src={
-                avatar?.url
-                  ? avatar?.url
-                  : "https://avatar.iran.liara.run/public/43"
-              }
+              src={avatar.url || "https://avatar.iran.liara.run/public/43"}
               alt=""
             />
           </label>
