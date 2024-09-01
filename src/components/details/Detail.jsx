@@ -1,3 +1,4 @@
+import { auth } from "../../library/firebase";
 import "./detail.css";
 import { FaArrowAltCircleDown } from "react-icons/fa";
 
@@ -29,7 +30,9 @@ const Detail = () => {
       </div>
       <div className="btns">
         <button className="block">Block</button>
-        <button className="logout">Log Out</button>
+        <button className="logout" onClick={() => auth.signOut()}>
+          Log Out
+        </button>
       </div>
     </div>
   );
