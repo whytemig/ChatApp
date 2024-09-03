@@ -3,8 +3,15 @@ import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
 import { useEffect, useRef, useState } from "react";
 import { database } from "../../library/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { useChatStore } from "../../library/chatStore";
+import { useUserStore } from "../../library/useStore";
 
 function Chats() {
   const [open, setOpen] = useState(false);
@@ -12,7 +19,8 @@ function Chats() {
   const [chat, setChat] = useState();
 
   const messageRef = useRef(null);
-  const { chatId } = useChatStore();
+  const { chatId, aUser } = useChatStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -32,6 +40,46 @@ function Chats() {
     setOpen(false);
   }
 
+  //Send Messaes
+  async function handleSend() {
+    if (input === "") return;
+
+    try {
+      await updateDoc(doc(database, "chats", chatId), {
+        messages: arrayUnion({
+          senderId: user.id,
+          text: input,
+          createdAt: new Date(),
+        }),
+      });
+
+      const userIds = [user.id, aUser.id];
+
+      userIds.forEach(async (id) => {
+        const userChatRefs = doc(database, "userchats", id);
+        const userChatSnapshot = await getDoc(userChatRefs);
+
+        if (userChatSnapshot.exists()) {
+          const userChatData = userChatSnapshot.data();
+
+          const chatIndex = userChatData.chats.findIndex(
+            (c) => c.chatId === chatId
+          );
+
+          userChatData.chats[chatIndex].lastMessage = input;
+          userChatData.chats[chatIndex].isSeen = id === user.id ? true : false;
+          userChatData.chats[chatIndex].updatedat = Date.now();
+
+          await updateDoc(userChatRefs, {
+            chats: userChatData.chats,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="chat">
       {/* TOP */}
@@ -46,64 +94,16 @@ function Chats() {
       </div>
       {/* CENTER */}
       <div className="center">
-        <div className="message">
-          <img src="https://avatar.iran.liara.run/public/43" alt="" />
-          <div className="text-message">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
+        {chat?.messages?.map((message, index) => (
+          <div className="message own" key={index}>
+            {message.img && <img src={message.img} alt="" />}
+            <div className="text-message">
+              <p>{message.text}</p>
+              <span>1 hr ago</span>
+            </div>
           </div>
-        </div>
-        <div className="message own">
-          <div className="text-message">
-            <img src="https://picsum.photos/id/237/200" alt="" />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://avatar.iran.liara.run/public/43" alt="" />
-          <div className="text-message">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
-          </div>
-        </div>
-        <div className="message own">
-          <div className="text-message">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
-          </div>
-        </div>
-        <div className="message">
-          <img src="https://avatar.iran.liara.run/public/43" alt="" />
-          <div className="text-message">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
-          </div>
-        </div>
-        <div className="message own">
-          <div className="text-message">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad ut
-              officia sint neque ducimus omnis.
-            </p>
-            <span>1 hr ago</span>
-          </div>
-        </div>
+        ))}
+
         <div ref={messageRef}></div>
       </div>
 
@@ -135,7 +135,9 @@ function Chats() {
           </div>
         </div>
         <div>
-          <button className="sendBtn">Send</button>
+          <button className="sendBtn" onClick={handleSend}>
+            Send
+          </button>
         </div>
       </div>
     </div>
