@@ -2,16 +2,29 @@ import "./chats.css";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
 import { useEffect, useRef, useState } from "react";
+import { database } from "../../library/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import { useChatStore } from "../../library/chatStore";
 
 function Chats() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [chat, setChat] = useState();
 
   const messageRef = useRef(null);
+  const { chatId } = useChatStore();
 
   useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
+
+  useEffect(() => {
+    const unSub = onSnapshot(doc(database, "chats", chatId), (res) => {
+      setChat(res.data());
+    });
+
+    return () => unSub();
+  }, [chatId]);
 
   // function for input for Emoji
   function handleEmojiInput(e) {

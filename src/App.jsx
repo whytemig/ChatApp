@@ -7,9 +7,11 @@ import Notify from "./components/notify/Notify";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./library/firebase";
 import { useUserStore } from "./library/useStore";
+import { useChatStore } from "./library/chatStore";
 
 function App() {
   const { user, isLoading, fetchUserInfo } = useUserStore();
+  const { chatId } = useChatStore();
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (currentUser) => {
       fetchUserInfo(currentUser?.uid);
@@ -26,8 +28,8 @@ function App() {
         {user ? (
           <>
             <List />
-            <Chats />
-            <Detail />
+            {chatId && <Chats />}
+            {chatId && <Detail />}
           </>
         ) : (
           <Login />

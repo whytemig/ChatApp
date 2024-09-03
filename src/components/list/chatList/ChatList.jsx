@@ -5,12 +5,16 @@ import AddUser from "../../addUser/AddUser";
 import { useUserStore } from "../../../library/useStore";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { database } from "../../../library/firebase";
+import { useChatStore } from "../../../library/chatStore";
 
 const ChatList = () => {
   const [addMode, setAddMode] = useState(true);
   const [chats, setChats] = useState([]);
 
   const { user } = useUserStore();
+  const { chatId, changeChat } = useChatStore();
+
+  console.log(chatId);
 
   useEffect(() => {
     const unSub = onSnapshot(
@@ -38,7 +42,9 @@ const ChatList = () => {
     };
   }, [user?.id]);
 
-  console.log(chats);
+  async function handleSelect(chat) {
+    changeChat(chat?.chatId, chat.user);
+  }
 
   return (
     <div className="chatlist">
@@ -56,7 +62,11 @@ const ChatList = () => {
         </div>
       </div>
       {chats?.map((chat) => (
-        <div className="item" key={chat.chatId}>
+        <div
+          className="item"
+          key={chat.chatId}
+          onClick={() => handleSelect(chat)}
+        >
           <img
             src="https://avatar.iran.liara.run/public/43"
             alt="Avatar Image"
