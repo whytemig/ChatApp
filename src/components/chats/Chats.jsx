@@ -1,7 +1,11 @@
 import "./chats.css";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
+import { FaImage } from "react-icons/fa";
+
 import { useEffect, useRef, useState } from "react";
+import upload from "../../library/upload";
+
 import { database } from "../../library/firebase";
 import {
   arrayUnion,
@@ -16,6 +20,7 @@ import { useUserStore } from "../../library/useStore";
 function Chats() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [inputImg, setInputImg] = useState({ file: null, url: "" });
   const [chat, setChat] = useState();
 
   const messageRef = useRef(null);
@@ -34,6 +39,18 @@ function Chats() {
     return () => unSub();
   }, [chatId]);
 
+  //Upload Image
+  function handleImg(e) {
+    console.log(e.target.files[0]);
+
+    if (e.target.files[0]) {
+      setInputImg({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0]),
+      });
+    }
+  }
+
   // function for input for Emoji
   function handleEmojiInput(e) {
     setInput((prev) => prev + e.emoji);
@@ -45,11 +62,20 @@ function Chats() {
     if (input === "") return;
 
     try {
+      let imgUrl = null;
+      //upload image
+      if (inputImg.file) {
+        imgUrl = await upload(inputImg.file);
+      }
+
+      console.log(imgUrl);
+
       await updateDoc(doc(database, "chats", chatId), {
         messages: arrayUnion({
           senderId: user.id,
           text: input,
           createdAt: new Date(),
+          ...(imgUrl && { img: imgUrl }),
         }),
       });
 
@@ -78,6 +104,12 @@ function Chats() {
     } catch (error) {
       console.log(error);
     }
+
+    setInputImg({
+      file: null,
+      url: "",
+    });
+    setInput("");
   }
 
   return (
@@ -96,13 +128,20 @@ function Chats() {
       <div className="center">
         {chat?.messages?.map((message, index) => (
           <div className="message own" key={index}>
-            {message.img && <img src={message.img} alt="" />}
+            {message.img && (
+              <img src={message.img} alt="" className="message img" />
+            )}
             <div className="text-message">
               <p>{message.text}</p>
               <span>1 hr ago</span>
             </div>
           </div>
         ))}
+        {inputImg.url && (
+          <div className="message own">
+            <img src={inputImg?.url} alt="" />
+          </div>
+        )}
 
         <div ref={messageRef}></div>
       </div>
@@ -111,6 +150,15 @@ function Chats() {
       <div className="bottom">
         <div className="icons">
           <button className="randomJoke">Random Joke</button>
+          <input
+            type="file"
+            id="file"
+            style={{ display: "none" }}
+            onChange={handleImg}
+          />
+          <label htmlFor="file">
+            <FaImage size={28} fill="#fff" />
+          </label>
         </div>
         <input
           value={input}

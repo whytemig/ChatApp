@@ -15,11 +15,9 @@ const Login = () => {
 
   //function to set Avatar
   function handleAvatar(e) {
-    console.log(e.target.files[0]);
-
     if (e.target.files[0]) {
       setAvatar({
-        file: e.target.files[0] || "https://avatar.iran.liara.run/public/43",
+        file: e.target.files[0],
         url: URL.createObjectURL(e.target.files[0]),
       });
     }
