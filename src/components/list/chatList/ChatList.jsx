@@ -10,6 +10,7 @@ import { useChatStore } from "../../../library/chatStore";
 const ChatList = () => {
   const [addMode, setAddMode] = useState(true);
   const [chats, setChats] = useState([]);
+  const [inputText, setInputText] = useState("");
 
   const { user } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -63,12 +64,22 @@ const ChatList = () => {
     }
   }
 
+  console.log(chats);
+
+  const filteredChats = chats?.filter((c) =>
+    c.user.username.toLowerCase().includes(inputText.toLowerCase())
+  );
+
   return (
     <div className="chatlist">
       <div className="search">
         <div className="searchBar">
           <FaSearch size={20} />
-          <input type="text" placeholder="Look up friends" />
+          <input
+            type="text"
+            placeholder="Look up friends"
+            onChange={(e) => setInputText(e.target.value)}
+          />
         </div>
         <div className="plus" onClick={() => setAddMode((prev) => !prev)}>
           {addMode ? (
@@ -78,7 +89,7 @@ const ChatList = () => {
           )}
         </div>
       </div>
-      {chats?.map((chat) => (
+      {filteredChats?.map((chat) => (
         <div
           className="item"
           key={chat.chatId}
@@ -88,11 +99,15 @@ const ChatList = () => {
           }}
         >
           <img
-            src="https://avatar.iran.liara.run/public/43"
+            src={user?.avatar || "https://avatar.iran.liara.run/public/43"}
             alt="Avatar Image"
           />
           <div className="text">
-            <span>{chat.user.username}</span>
+            <span>
+              {chat?.user?.block.includes(user?.id)
+                ? "User"
+                : chat.user.username}
+            </span>
             <p>{chat.lastMessage}</p>
           </div>
         </div>

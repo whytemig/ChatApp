@@ -24,7 +24,8 @@ function Chats() {
   const [chat, setChat] = useState();
 
   const messageRef = useRef(null);
-  const { chatId, aUser } = useChatStore();
+  const { chatId, aUser, isReceiverBlocked, isCurrentUserBlocked } =
+    useChatStore();
   const { user } = useUserStore();
 
   useEffect(() => {
@@ -111,15 +112,24 @@ function Chats() {
     });
     setInput("");
   }
+  //Send Random Joke
+  async function handleRandomJK() {
+    const res = await fetch("https://icanhazdadjoke.com/slack");
+    const data = await res.json();
+    setInput(data.attachments[0].text);
+  }
 
   return (
     <div className="chat">
       {/* TOP */}
       <div className="top">
         <div className="userInfo">
-          <img src="https://avatar.iran.liara.run/public/43" alt="" />
+          <img
+            src={aUser?.avatar || "https://avatar.iran.liara.run/public/43"}
+            alt=""
+          />
           <div className="text">
-            <span>UserName</span>
+            <span>{aUser?.username}</span>
             <p>Lorem ipsum dolor sit amet consectetur.</p>
           </div>
         </div>
@@ -127,7 +137,12 @@ function Chats() {
       {/* CENTER */}
       <div className="center">
         {chat?.messages?.map((message, index) => (
-          <div className="message own" key={index}>
+          <div
+            className={
+              message.senderId === user?.id ? "message own" : "message"
+            }
+            key={index}
+          >
             {message.img && (
               <img src={message.img} alt="" className="message img" />
             )}
@@ -149,7 +164,9 @@ function Chats() {
       {/* BOTTOM */}
       <div className="bottom">
         <div className="icons">
-          <button className="randomJoke">Random Joke</button>
+          <button className="randomJoke" onClick={handleRandomJK}>
+            Random Joke
+          </button>
           <input
             type="file"
             id="file"
@@ -160,11 +177,16 @@ function Chats() {
             <FaImage size={28} fill="#fff" />
           </label>
         </div>
-        <input
+        <textarea
           value={input}
           type="text"
-          placeholder="Type a Joke...."
+          placeholder={
+            isReceiverBlocked || isCurrentUserBlocked
+              ? "YOU ARE BLOCKED"
+              : "Type a Joke...."
+          }
           onChange={(e) => setInput(e.target.value)}
+          disabled={isReceiverBlocked || isCurrentUserBlocked}
         />
         <div className="emoji">
           <BsEmojiSmile
@@ -183,8 +205,12 @@ function Chats() {
           </div>
         </div>
         <div>
-          <button className="sendBtn" onClick={handleSend}>
-            Send
+          <button
+            className="sendBtn"
+            onClick={handleSend}
+            disabled={isReceiverBlocked || isCurrentUserBlocked}
+          >
+            {isReceiverBlocked || isCurrentUserBlocked ? "BLOCKED" : "Send"}
           </button>
         </div>
       </div>

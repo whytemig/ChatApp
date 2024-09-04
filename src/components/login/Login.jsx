@@ -17,7 +17,7 @@ const Login = () => {
   function handleAvatar(e) {
     if (e.target.files[0]) {
       setAvatar({
-        file: e.target.files[0],
+        file: e.target.files[0] || "https://avatar.iran.liara.run/public/43",
         url: URL.createObjectURL(e.target.files[0]),
       });
     }
