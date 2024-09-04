@@ -21,7 +21,7 @@ const ChatList = () => {
         const items = res.data().chats;
 
         const promises = items.map(async (item) => {
-          const userDocRef = doc(database, "users", item.recieverId);
+          const userDocRef = doc(database, "users", item.receiverId);
           const userDocSnap = await getDoc(userDocRef);
 
           let user = userDocSnap.data();
@@ -38,10 +38,10 @@ const ChatList = () => {
     return () => {
       unSub();
     };
-  }, [user?.id]);
+  }, [user.id]);
 
   async function handleSelect(chat) {
-    changeChat(chat?.chatId, chat.user);
+    changeChat(chat.chatId, chat.user);
   }
 
   return (
@@ -64,6 +64,9 @@ const ChatList = () => {
           className="item"
           key={chat.chatId}
           onClick={() => handleSelect(chat)}
+          style={{
+            backgroundColor: `${chat?.isSeen ? "#f1f1f1" : "transparent"}`,
+          }}
         >
           <img
             src="https://avatar.iran.liara.run/public/43"

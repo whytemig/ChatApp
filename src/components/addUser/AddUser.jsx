@@ -49,11 +49,11 @@ const AddUser = () => {
         messages: [],
       });
 
-      await updateDoc(doc(userChatsRef, user?.id), {
+      await updateDoc(doc(userChatsRef, userFromAuth?.id), {
         chats: arrayUnion({
-          chatId: newChatRef.id,
+          chatId: newChatRef?.id,
           lastMessage: "",
-          recieverId: userFromAuth.id,
+          receiverId: userFromAuth?.id,
           updatedat: Date.now(),
         }),
       });
@@ -61,7 +61,7 @@ const AddUser = () => {
         chats: arrayUnion({
           chatId: newChatRef.id,
           lastMessage: "",
-          recieverId: user?.id,
+          receiverId: userFromAuth?.id,
           updatedat: Date.now(),
         }),
       });
