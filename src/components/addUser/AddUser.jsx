@@ -49,19 +49,19 @@ const AddUser = () => {
         messages: [],
       });
 
-      await updateDoc(doc(userChatsRef, userFromAuth?.id), {
+      await updateDoc(doc(userChatsRef, user?.id), {
         chats: arrayUnion({
           chatId: newChatRef?.id,
           lastMessage: "",
-          receiverId: userFromAuth?.id,
+          receiverId: userFromAuth.id,
           updatedat: Date.now(),
         }),
       });
       await updateDoc(doc(userChatsRef, userFromAuth?.id), {
         chats: arrayUnion({
-          chatId: newChatRef.id,
+          chatId: newChatRef?.id,
           lastMessage: "",
-          receiverId: userFromAuth?.id,
+          receiverId: user?.id,
           updatedat: Date.now(),
         }),
       });
@@ -86,7 +86,7 @@ const AddUser = () => {
           <div className="userDetails">
             <img
               className="userAvatar"
-              src={user.avatar || "https://avatar.iran.liara.run/public/43"}
+              src={user?.avatar || "https://avatar.iran.liara.run/public/43"}
               alt="user avatar"
             />
             <span className="userName">{user?.username}</span>
